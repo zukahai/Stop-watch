@@ -52,9 +52,19 @@ public class StopWatch extends JFrame implements ActionListener{
 			pn_temp.setLayout(new FlowLayout());
 			pn_temp.add(lb_temp);
 			
+			int t, b, l, r;
+			t = b = l = r = 5;
+			if (i / colum == 0)
+				t = 10;
+			if (i / colum == colum - 1)
+				b = 10;
+			if (i % colum == 0)
+				l = 10;
+			if ((i + 1) % colum == 0)
+				r = 10;
 			pn[i].add(pn_temp);
 			pn[i].add(wt[i]);
-			pn[i].setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.red));
+			pn[i].setBorder(BorderFactory.createMatteBorder(t, l, b, r, Color.red));
 			
 			watch_pn.add(pn[i]);
 		}
@@ -89,7 +99,7 @@ public class StopWatch extends JFrame implements ActionListener{
 			}
 		});
 		this.setVisible(true);
-		this.setSize(colum * 200, row * 130);
+		this.setSize(colum * 205, row * 135);
 //		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 //		this.setResizable(false);
