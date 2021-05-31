@@ -21,6 +21,7 @@ public class StopWatch extends JFrame implements ActionListener{
 	Container cn;
 	Timer timer;
 	String timeStart = "";
+	boolean startClick = true;
 	JButton start_bt, stop_bt;
 	JButton wt[] = new JButton[1000];
 	JPanel watch_pn, button_pn;
@@ -56,7 +57,7 @@ public class StopWatch extends JFrame implements ActionListener{
 			t = b = l = r = 5;
 			if (i / colum == 0)
 				t = 10;
-			if (i / colum == colum - 1)
+			if (i / colum == row - 1)
 				b = 10;
 			if (i % colum == 0)
 				l = 10;
@@ -69,18 +70,20 @@ public class StopWatch extends JFrame implements ActionListener{
 			watch_pn.add(pn[i]);
 		}
 		
-		start_bt = new JButton("Start");
+		start_bt = new JButton("   Start   ");
 		start_bt.addActionListener(this);
 		start_bt.setFont(new Font("UTM Nokia", 1, 15));
 		start_bt.setBackground(Color.white);
+		start_bt.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
 		
-		stop_bt = new JButton("Stop");
+		stop_bt = new JButton("   Stop   ");
 		stop_bt.addActionListener(this);
 		stop_bt.setFont(new Font("UTM Nokia", 1, 15));
 		stop_bt.setBackground(Color.white);
+		stop_bt.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.green));
 		
 		button_pn = new JPanel();
-		button_pn.setLayout(new GridLayout(2, 1));
+		button_pn.setLayout(new FlowLayout());
 		button_pn.add(start_bt);
 		button_pn.add(stop_bt);
 		
@@ -99,7 +102,7 @@ public class StopWatch extends JFrame implements ActionListener{
 			}
 		});
 		this.setVisible(true);
-		this.setSize(colum * 205, row * 135);
+		this.setSize(colum * 200 + 20, row * 100 + 90);
 //		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 //		this.setResizable(false);
@@ -125,11 +128,15 @@ public class StopWatch extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getActionCommand().equals(start_bt.getText())) {
-			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss:SS");
-			timeStart = sdf.format(cal.getTime());
-			timer.start();
-			start_bt.disable();
+			if (startClick) {
+				Calendar cal = Calendar.getInstance();
+				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss:SS");
+				timeStart = sdf.format(cal.getTime());
+				timer.start();
+				start_bt.disable();
+				start_bt.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.red));
+				startClick = false;
+			}
 		} else {
 			startClock++;
 		}
@@ -168,6 +175,6 @@ public class StopWatch extends JFrame implements ActionListener{
 	} 
 	
 	public static void main(String[] args) {
-		new StopWatch(9);
+		new StopWatch(16);
 	}
 }
