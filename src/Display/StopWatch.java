@@ -21,6 +21,7 @@ public class StopWatch extends JFrame implements ActionListener{
 	Container cn;
 	Timer timer;
 	String timeStart = "";
+	int colum, row, N;
 	boolean startClick = true;
 	JButton start_bt, stop_bt;
 	JButton wt[] = new JButton[1000];
@@ -36,6 +37,9 @@ public class StopWatch extends JFrame implements ActionListener{
 		Container cn = this.getContentPane();
 		int row = getSiZe(N)[0];
 		int colum = getSiZe(N)[1];
+		this.colum = colum;
+		this.row = row;
+		this.N = N;
 		watch_pn = new JPanel();
 		watch_pn.setLayout(new GridLayout(row, colum));
 		for (int i = 0; i < N; i++) {
@@ -136,9 +140,35 @@ public class StopWatch extends JFrame implements ActionListener{
 				start_bt.disable();
 				start_bt.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.red));
 				startClick = false;
+				for (int i = 0; i < N; i++) {
+					int t, b, l, r;
+					t = b = l = r = 5;
+					if (i / colum == 0)
+						t = 10;
+					if (i / colum == row - 1)
+						b = 10;
+					if (i % colum == 0)
+						l = 10;
+					if ((i + 1) % colum == 0)
+						r = 10;
+					pn[i].setBorder(BorderFactory.createMatteBorder(t, l, b, r, Color.green));
+				}
 			}
 		} else {
+			int t, b, l, r;
+			t = b = l = r = 5;
+			if (startClock / colum == 0)
+				t = 10;
+			if (startClock / colum == row - 1)
+				b = 10;
+			if (startClock % colum == 0)
+				l = 10;
+			if ((startClock + 1) % colum == 0)
+				r = 10;
+			pn[startClock].setBorder(BorderFactory.createMatteBorder(t, l, b, r, Color.red));
 			startClock++;
+			if (startClock == N) 
+				stop_bt.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, Color.red));
 		}
 	}
 	
